@@ -7,8 +7,14 @@ app.use("/test",(req,res)=>{
 })
 
 
+
 app.get("/user",(req,res)=>{
+    console.log(req.query) // the path will be /user?userId=101&pass=123
     res.send({"firstName":"Supreet","lastName":"Kumar"})
+})
+
+app.get("/content/:contentId",(req,res)=>{
+    console.log(req.params); // the path is /content/707 
 })
 
 // any thing which matches /* then it will route to below .
