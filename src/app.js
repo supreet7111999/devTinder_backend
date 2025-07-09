@@ -7,6 +7,22 @@ app.use("/test",(req,res)=>{
 }) 
 
 
+// Handle Auth Middleware for admin type req.
+app.get("/admin",(req,res,next)=>{
+    //Authorization Logic
+    const adminAuthorize=true;
+    if(!adminAuthorize)
+    {
+        res.status(401).send("Unauthorized req");
+    }
+    else{
+        next();
+    }
+})
+
+app.get("/admin/getAllData",(req,res)=>{
+    res.send("All Data");
+})
 
 app.get("/user",(req,res)=>{
     console.log(req.query) // the path will be /user?userId=101&pass=123
