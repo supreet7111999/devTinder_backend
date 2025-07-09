@@ -57,6 +57,15 @@ app.use("/jhingalala",(req,res)=>{
     res.send("Further send");
 })
 
+
+app.use("/",(err,req,res,next)=>{
+    if(err)
+    {
+        res.status(501).send("Something wrong");
+    }
+})
+
+
 app.listen(7000,()=>{
     console.log("Server listening on 7000")
 });
