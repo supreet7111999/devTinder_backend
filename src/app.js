@@ -33,8 +33,13 @@ app.use("/jhingala",[
     },
     (req,res)=>{
         res.send("Final");
+        next();
     }
 ])
+
+app.use("/jhingalala",(req,res)=>{
+    res.send("Further send");
+})
 
 app.listen(7000,()=>{
     console.log("Server listening on 7000")
