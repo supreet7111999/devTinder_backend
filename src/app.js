@@ -4,7 +4,7 @@ const app=express();
 
 app.use("/test",(req,res)=>{
     res.send("Hello bro")
-})
+}) 
 
 
 
@@ -21,6 +21,20 @@ app.get("/content/:contentId",(req,res)=>{
 app.use("/",(req,res)=>{
     res.send("Base Url");
 })
+
+app.use("/jhingala",[
+    (req,res,next)=>{
+        console.log("1st handler");
+        next();
+    },
+    (req,res,next)=>{
+        console.log("2nd handler");
+        next();
+    },
+    (req,res)=>{
+        res.send("Final");
+    }
+])
 
 app.listen(7000,()=>{
     console.log("Server listening on 7000")
