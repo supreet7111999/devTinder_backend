@@ -2,6 +2,10 @@ const express=require('express');
 const connectDB=require("./config/database");
 const app=express();
 const User=require('./models/User');
+const {validateSignUpData}=require('./utils/validation')
+const bcrypt=require('bcrypt');
+
+
 
 app.use(express.json());
 
@@ -10,11 +14,29 @@ app.post("/signup",async(req,res)=>{
     //     firstName:"Supreet",
     //     lastName:"kumar"
     // };
+    //Validation
+    try{
+        validateSignUpData(req);
+    //Encrypt the password
+    const {firstName,lastName,emailId,password}=req.body;
+    
+    const passwordHash=await bcrypt.hash(password,10);
 
-    const user=new User(req.body);
+    const user=new User({
+        firstName,
+        lastName,
+        emailId,
+        password: passwordHash
+    });
 
     await user.save() ;
     res.send("User Created")
+    }
+    catch(err){
+        res.status(400).send("Something went wrong"+err);
+    }
+
+
 })
 
 
