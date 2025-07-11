@@ -33,6 +33,7 @@ app.get("/user",async (req,res)=>{
     }
 
 })
+ 
 app.get("/alluser",async (req,res)=>{
     // const userEmail=req.bbody.emailId;
     try{
@@ -49,7 +50,36 @@ app.get("/alluser",async (req,res)=>{
 
 })
 
+app.patch("/user",async (req,res)=>{
+    const userId=req.body.userId;
+    const data=req.body;
 
+    //validations check
+
+    const ALLOWED_UPDATES=[
+        "userId",
+        "photoUrl",
+        "about",
+        "gender",
+        "age",
+        "skilss"
+    ];
+
+    const isUpdateAllowed=Object.keys(data).every((key)=>{
+        ALLOWED_UPDATES.includes(key)
+    });
+
+    if(!isUpdateAllowed){
+        res.status(400).send("Update not allowed")
+    }
+    try{
+        const user=await User.findByUdAndUpdate({_id:userId},data);
+        res.status(200).send("Success"+user);
+    }
+    catch(err){
+       res.status(400).send("Error "+err);
+    }
+})
 
 connectDB()
 .then(
