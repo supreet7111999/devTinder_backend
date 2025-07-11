@@ -18,6 +18,37 @@ app.post("/signup",async(req,res)=>{
 })
 
 
+app.get("/user",async (req,res)=>{
+    const userEmail=req.bbody.emailId;
+    try{
+        const users=await User.find({emailId:userEmail});
+        if(users.length===0)
+            res.status(404).send("user not found");
+        else
+            res.send(users);
+    }
+    catch(err)
+    {
+        res.status(400).send("Something went wrong");
+    }
+
+})
+app.get("/alluser",async (req,res)=>{
+    // const userEmail=req.bbody.emailId;
+    try{
+        const users=await User.find({});
+        if(users.length===0)
+            res.status(404).send("user not found");
+        else
+            res.send(users);
+    }
+    catch(err)
+    {
+        res.status(400).send("Something went wrong");
+    }
+
+})
+
 
 
 connectDB()
