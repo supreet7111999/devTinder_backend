@@ -4,9 +4,9 @@ const app=express();
 const User=require('./models/User');
 const {validateSignUpData}=require('./utils/validation')
 const bcrypt=require('bcrypt');
+const cookieParser=require("cookie-parser");
 
-
-
+app.use(cookieParser);
 app.use(express.json());
 
 app.post("/signup",async(req,res)=>{
@@ -39,7 +39,7 @@ app.post("/signup",async(req,res)=>{
 
 })
 
-app.post("/login",async (req,res)=>{
+ app.post("/login",async (req,res)=>{
     try{
         const {emailId,password}=req.body;
         const user=await User.findOne({emailId:emailId});
@@ -55,7 +55,7 @@ app.post("/login",async (req,res)=>{
           throw new Error("Password incorrect");
     }
     catch(err){
-        res.status(404).send(err);
+        res.status(404).send(err); 
     }
 })
 
